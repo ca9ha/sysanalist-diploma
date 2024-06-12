@@ -1,0 +1,138 @@
+openapi: 3.0.3
+info:
+  title: PetHotel
+  version: 1.0.0
+  contact: {}
+servers:
+  - url: '{{petboardingUrl}}'
+paths:
+  /rooms:
+    get:
+      summary: Поиск номера
+      description: Получение списка гостиничных номеров, доступных для пребывания питомцев
+      operationId: ''
+      parameters:
+        - name: checkin_date
+          in: query
+          schema:
+            type: string
+            example: '2024-06-11'
+        - name: checkout_date
+          in: query
+          schema:
+            type: string
+            example: '2024-06-14'
+        - name: pet_count
+          in: query
+          schema:
+            type: string
+            example: '2'
+      responses:
+        '200':
+          description: ''
+  /bookings/{bookingId}/status:
+    get:
+      summary: Получение статуса бронирования
+      description: Получение статуса бронирования передержки животного
+      operationId: '1'
+      responses:
+        '200':
+          description: ''
+    parameters:
+      - name: bookingId
+        in: path
+        required: true
+        schema:
+          type: string
+  /bookings:
+    post:
+      summary: Создание бронирования
+      description: Создание нового бронирования передержки животного.
+      operationId: '2'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                checkouts-date:
+                  type: string
+                  example: '2024-06-20'
+                chekin-date:
+                  type: string
+                  example: '2024-06-11'
+                pets:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      additional_info:
+                        type: string
+                        example: ''
+                      age:
+                        type: number
+                        example: 2
+                      name:
+                        type: string
+                        example: Кошка
+                      pet_id:
+                        type: number
+                        example: 1
+                  example:
+                    - additional_info: ''
+                      age: 2
+                      name: Кошка
+                      pet_id: 1
+                phone:
+                  type: string
+                  example: '+375335236699'
+                user_id:
+                  type: number
+                  example: 1
+                user_name:
+                  type: string
+                  example: name
+            examples:
+              Создание бронирования:
+                value:
+                  checkouts-date: '2024-06-20'
+                  chekin-date: '2024-06-11'
+                  pets:
+                    - additional_info: ''
+                      age: 2
+                      name: Кошка
+                      pet_id: 1
+                  phone: '+375335236699'
+                  user_id: 1
+                  user_name: name
+      responses:
+        '200':
+          description: ''
+  /bookings/{bookingId}:
+    put:
+      summary: Изменение бронирование
+      description: Обновление информации о бронировании передержки животного.
+      operationId: '3'
+      responses:
+        '200':
+          description: ''
+      parameters:
+        - name: bookingId
+          in: path
+          required: true
+          schema:
+            type: string
+    get:
+      summary: Получение информации о бронировании
+      description: Получение информации о конкретном бронировании передержки животного.
+      operationId: '4'
+      responses:
+        '200':
+          description: ''
+      parameters:
+        - name: bookingId
+          in: path
+          required: true
+          schema:
+            type: string
+tags: []
