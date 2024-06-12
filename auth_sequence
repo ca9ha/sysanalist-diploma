@@ -1,0 +1,25 @@
+@startuml
+activate User
+User->WebApp: Enter credentials
+activate WebApp
+WebApp->AuthService: Send user credentials
+activate AuthService
+
+alt successful case
+  AuthService-->WebApp: Validate credentials 
+  AuthService->WebApp: Generate authorization token 
+  WebApp ->User: Send authorization token
+  User->WebApp: Provide authorization token
+  WebApp->AuthService: Send authorization token for verification
+  AuthService->WebApp: Verify authorization token
+
+else credential not valid
+
+   AuthService->WebApp: Non valid credentials
+    deactivate AuthService
+    WebApp ->User: Send failure message
+
+deactivate WebApp
+deactivate User
+end
+@enduml
